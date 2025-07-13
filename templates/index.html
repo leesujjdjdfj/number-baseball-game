@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>햄 숫자야구 멀티</title>
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <script defer src="/static/script.js"></script>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 2rem;
+      background-color: #f0f2f5;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+    .container {
+      width: 100%;
+      max-width: 500px;
+      background: white;
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    input, button {
+      font-size: 1rem;
+      padding: 0.75rem;
+      margin: 0.5rem 0;
+      width: 100%;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 0.5rem;
+    }
+    button {
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    #status {
+      font-weight: bold;
+      margin: 1rem 0;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      background: #e9ecef;
+      margin: 0.25rem 0;
+      padding: 0.5rem;
+      border-radius: 0.3rem;
+    }
+    #scoreboard {
+      margin-top: 1rem;
+      padding: 0.5rem;
+      background: #f8f9fa;
+      border-radius: 0.3rem;
+    }
+    #restart-section {
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 style="text-align:center">⚾ 햄 숫자야구 - 멀티</h1>
+    <div id="login">
+      <label>이름:<input id="name" placeholder="닉네임 입력" /></label>
+      <label>방 코드:<input id="room" placeholder="영문 또는 숫자" /></label>
+      <button onclick="generateRoomCode()">🔄 방 코드 생성</button>
+      <button onclick="joinGame()">게임 참가</button>
+    </div>
+    <div id="setup" style="display:none;">
+      <label>자리 수 (3~5):<input id="length" type="number" value="3" min="3" max="5"/></label>
+      <label>비밀 숫자 입력:<input id="secret" placeholder="예: 123"/></label>
+      <button onclick="setSecret()">제출</button>
+    </div>
+    <div id="game" style="display:none;">
+      <p id="status">게임 상태</p>
+      <input id="guess" placeholder="숫자 추측" />
+      <button onclick="sendGuess()">추측</button>
+      <ul id="log"></ul>
+      <div id="scoreboard">
+        <strong>점수판</strong><br />
+        <span id="player1">Player 1: 0승</span><br />
+        <span id="player2">Player 2: 0승</span>
+      </div>
+      <div id="restart-section">
+        <button onclick="requestRestart()">다시 시작 요청</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
